@@ -4,37 +4,34 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var MongoClient = require('mongodb').MongoClient;
-var assert = require('assert');
-var flash = require('express-flash');
-var session = require('express-session');
-var mongoose = require('mongoose');
-
+var hbs = require('express-handlebars');
 var index = require('./routes/index');
+var about = require('./routes/about');
+var hbshelpsers = require('./hbshelpers/helpers');
 
 var app = express();
 
 // view engine setup
+app.engine('.hbs', hbs({
+  extname:'.hbs',
+  defaultLayout: 'layout',
+  helpers: hbshelpsers,
+  partialsDor: path.join(__dirname, 'views/partials')
+}));
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// MongoDB setup
-var mongo_pw = process.env.MONGO_PW;
-var url = 'mongodb://taskmanager:pw123@ds157320.mlab.com:57320/todo';
-
-// setup mongoose connection
-mongoose.connect(url);
-
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({secret:'top secret key'}));
-app.use(flash());
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/about', about);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -53,7 +50,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-
 
 module.exports = app;
