@@ -1,0 +1,79 @@
+/* begin accordion css */
+
+
+.ui-widget {
+    font-size: 24px;
+    color: black;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    border: none;
+    background: url();
+    font-weight: normal;
+    color: #000;
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+    background: url();
+    font-weight: normal;
+    color: #000;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
+    border-top-right-radius: 0;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+    border-bottom-right-radius: 0;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
+    border-bottom-left-radius: 0;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
+    border-top-right-radius: 0;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
+    border-top-left-radius: 0;
+}
+.ui-widget-content {
+    border:none;
+    border-bottom: 1px solid #908F8F;
+    background: #ffffff url();
+    color: #000;
+}
+.ui-widget-content:last-of-type{
+    border: 0;
+}
+#custom-multi-band .acc-header .acc-header-text{
+    margin-left: 40px;
+}
+#custom-multi-band .acc-header .acc-header-text:hover{
+    color: #ff4c00;
+}
+#custom-multi-band #accordion .acc-body{
+    font-family: 'Trade Gothic', Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 17px;
+    color: black;
+    text-transform: none;
+}
+#sub-accordion h3{
+    font-size: 20px;
+    text-align: left;
+}
+#sub-accordion p{
+    text-transform: none;
+}
+#sub-accordion p:last-of-type {
+    border-bottom: none;
+}
+.ui-widget-content{
+    background: transparent;
+}
+.ui-accordion-header:hover,.ui-accordion-header:active,.ui-accordion-header:visited,.ui-accordion-header:focus{
+    border:none !important;
+}
+.ui-accordion-header:hover{
+    color:#9E9E9E;
+}
+
+/* remvoe webkit auto focus border*/
+:focus {
+    outline: -webkit-focus-ring-color auto 0px;
+}
