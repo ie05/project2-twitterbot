@@ -1,7 +1,5 @@
 var Twit = require('twit');
 var TwitterBot = require('node-twitterbot').TwitterBot;
-var regex = require('../helpers/regex');
-var chooseRandom = require('../helpers/randomPhrase');
 var T = new Twit({
  consumer_key: process.env.BOT_CONSUMER_KEY,
  consumer_secret: process.env.BOT_CONSUMER_SECRET,
@@ -17,6 +15,55 @@ var Bot = new TwitterBot({
  access_token_secret: process.env.BOT_ACCESS_TOKEN_SECRET
 });
 
+var removeRegexChars = function(text){
+     var regex = [
+          /\b^[RT @]+\s/igm, // reTweets 
+          /\B#[a-z0-9_-]+/igm, // hashTags
+          /(&amp;)|(&lt;)|(&gt;)/igm, // encodedChars
+          /[<>{}()\[\]]/igm, // malChar
+          /\B@[\:a-z0-9_-]+\s/igm, // atUsers
+          /https?:\/\/(www\.)?[-a-z\/A-Z0-9@:%._\+~#=]{2,256}\.?[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/igm, // links
+          /\.\.\./igm, // real ellipses
+          /…/igm // non- utf ellipses
+     ];
+     
+     // loop over the regex array
+     // and apply .replace method to passed in
+     // string, return the string that has been
+     // parsed and cleaned of invalid
+     // or misc. characters
+     var regexMap = regex.map(function(item){
+          text = text.replace(item,'');
+     });
+     // string to return after every loop
+     return text;
+};
+
+
+// random default phrases if twit object fails for any reason
+     var phraseArray = [ 
+                              'It\'s all in the reflexes',
+                         'Is it getting hot in here, or is it just me?',
+                         'Ol\' Jack always says... what the hell?',
+                         'Have ya paid your dues, Jack? "Yessir, the check is in the mail."',
+                         'Like I told my last wife, I says, "Honey, I never drive faster than I can see."',
+                         'Everybody relax, I\'m here.',
+                         'Tall guy, weird clothes. First you see him, then you don\'t.',
+                         'If we\'re not back by dawn... call the president',
+                         'Just look that big ol\' storm right square in the eye and say, "Give me your best shot, pal."',
+                         'I was born ready'
+                        ];
+          
+     // use Math.floor and Math.random to
+     // select a random Jack Burton Quote
+     function chooseRandom(myArray) {
+       return myArray[Math.floor(Math.random() * myArray.length)];
+     }
+
+     var generateRandomPhrase = function(){
+          return chooseRandom(phraseArray);
+     };
+
 // get the current date's value
 // and subtract 24 hours (86400000 ms)
 var yesterdaysTimeInMilliseconds = new Date().getTime() - 86400000;
@@ -31,7 +78,7 @@ var basePhrase = 'You know what ol\' Jack Burton always says?';
 
 // call the chooseRandom {f} and 
 // store in a variable
-var randomPhrase = chooseRandom();
+var randomPhrase = generateRandomPhrase();
 
 // use twit obj to make twitter api request
 // currently, restricts return to 10 tweets
@@ -74,7 +121,7 @@ T.get('search/tweets', { q: '@TheOnion since:' + previousDay, count: 10 }, funct
            // statuses array. Return a new array called trimmedStatuses
            // trimmedStatuses will hold tweets with tags, urls,
            // and @twitter handles removed
-           var trimmedStatuses = statuses.map(regex);
+           var trimmedStatuses = statuses.map(removeRegexChars);
             
            // get the first trimmedStatus that is short enough
            // for a tweet, and use the text at its index
