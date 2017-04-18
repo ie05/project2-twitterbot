@@ -1,11 +1,6 @@
 var Twit = require('twit');
 var TwitterBot = require('node-twitterbot').TwitterBot;
-var scraper = require('google-search-scraper');
- 
-var options = {
-  query: 'nodejs',
-  limit: 3
-};
+
 var Bot = new TwitterBot({
  consumer_key: process.env.BOT_CONSUMER_KEY,
  consumer_secret: process.env.BOT_CONSUMER_SECRET,
@@ -25,11 +20,6 @@ var phraseArray = [ "hey twitter",
 function chooseRandom(myArray) {
   return myArray[Math.floor(Math.random() * myArray.length)];
 }
-scraper.search(options, function(err, url) {
-  // This is called for each result 
-  if(err) throw err;
-  console.log(url)
-});
 
 var phrase = chooseRandom(phraseArray) + ", " + chooseRandom(phraseArray);
 Bot.tweet(phrase);
