@@ -1,4 +1,4 @@
-var removeRegexChars = require('../helpers/regex');
+var removeRegexChars = require('./helpers/regex');
 var Twit = require('twit');
 var TwitterBot = require('node-twitterbot').TwitterBot;
 var T = new Twit({

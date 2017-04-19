@@ -20,7 +20,7 @@
   	});
   	// string to return after every loop
   	return text;
-  }
+  };
 
 
 module.exports = removeRegexChars;
