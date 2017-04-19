@@ -1,6 +1,12 @@
 var removeRegexChars = require('./helpers/regex');
+var generateRandomPhrase = require('./helpers/randomPhrase');
 var Twit = require('twit');
 var TwitterBot = require('node-twitterbot').TwitterBot;
+
+// pass env vars to Twit so instances
+// can access bot account credentials
+// this instance is used to make queries
+// twitter api
 var T = new Twit({
  consumer_key: process.env.BOT_CONSUMER_KEY,
  consumer_secret: process.env.BOT_CONSUMER_SECRET,
@@ -9,6 +15,10 @@ var T = new Twit({
  timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests. 
 });
 
+// pass env vars to TwitterBot so instances
+// can access bot account credentials
+// this instances is used to make post
+// request using the twitter api
 var Bot = new TwitterBot({
  consumer_key: process.env.BOT_CONSUMER_KEY,
  consumer_secret: process.env.BOT_CONSUMER_SECRET,
@@ -16,30 +26,6 @@ var Bot = new TwitterBot({
  access_token_secret: process.env.BOT_ACCESS_TOKEN_SECRET
 });
 
-
-// random default phrases if twit object fails for any reason
-     var phraseArray = [ 
-                              'It\'s all in the reflexes',
-                         'Is it getting hot in here, or is it just me?',
-                         'Ol\' Jack always says... what the hell?',
-                         'Have ya paid your dues, Jack? "Yessir, the check is in the mail."',
-                         'Like I told my last wife, I says, "Honey, I never drive faster than I can see."',
-                         'Everybody relax, I\'m here.',
-                         'Tall guy, weird clothes. First you see him, then you don\'t.',
-                         'If we\'re not back by dawn... call the president',
-                         'Just look that big ol\' storm right square in the eye and say, "Give me your best shot, pal."',
-                         'I was born ready'
-                        ];
-          
-     // use Math.floor and Math.random to
-     // select a random Jack Burton Quote
-     function chooseRandom(myArray) {
-       return myArray[Math.floor(Math.random() * myArray.length)];
-     }
-
-     var generateRandomPhrase = function(){
-          return chooseRandom(phraseArray);
-     };
 
 // get the current date's value
 // and subtract 24 hours (86400000 ms)
@@ -53,8 +39,8 @@ var previousDay = new Date(yesterdaysTimeInMilliseconds).toISOString().substring
 // appended to with the twit obj's text
 var basePhrase = 'You know what ol\' Jack Burton always says?';
 
-// call the chooseRandom {f} and 
-// store in a variable
+// call the generateRandomPhrase {f} and 
+// store return data in a variable
 var randomPhrase = generateRandomPhrase();
 
 // use twit obj to make twitter api request
