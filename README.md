@@ -1,5 +1,5 @@
 # Ian Handshy
-## Project: 2 - Twitter Bot: Jack Robo Burton
+## Twitter Bot: Jack Robo Burton
 
 Jack Burton is possibly the greatest hero to ever walk the Earth at least in his own mind. He plays the main role in Big Trouble in Little China, an action/comedy released in 1986. It's a classic. Jack is an anti-hero, and mostly provides comic relief.
 
